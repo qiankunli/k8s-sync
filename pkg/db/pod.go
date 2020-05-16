@@ -31,7 +31,7 @@ var db *sqlx.DB
 
 func init() {
 	var err error
-	db, err = sqlx.Open("mysql", "naliworld:password!@tcp(192.168.60.11:3306)/k8s?parseTime=true")
+	db, err = sqlx.Open("mysql", "username:password@tcp(ip:port)/k8s?parseTime=true")
 	db.SetMaxOpenConns(10)
 	if err != nil {
 		log.Err(err).Msg("init db error")
