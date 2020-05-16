@@ -5,7 +5,7 @@
 
 .idea/
 k8s-sync
-
+k8s-sync.log
 
 ### Go template
 # Binaries for programs and plugins
