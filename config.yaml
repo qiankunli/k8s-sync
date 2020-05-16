@@ -1,0 +1,9 @@
+apiServer:
+  env: test
+  host: 
+  bearerToken: 
+clean:
+  intervalSeconds: 60
+log:
+  debug: true
+
