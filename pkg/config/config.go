@@ -38,6 +38,7 @@ func (clean *Clean) Check() error {
 
 type Log struct {
 	Debug bool `yaml:"debug"`
+	File  string `yaml:"file"`
 }
 
 func (log *Log) Check() error {

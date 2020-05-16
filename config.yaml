@@ -6,4 +6,5 @@ clean:
   intervalSeconds: 60
 log:
   debug: true
+  file: k8s-sync.log
 

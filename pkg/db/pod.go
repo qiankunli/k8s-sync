@@ -69,7 +69,7 @@ func SaveOrUpdate(pod PersistentPod) error {
 			log.Debug().Msgf("pod name %s is exist,update it", pod.Name)
 			UpdateByName(pod)
 		} else {
-			log.Debug().Msgf("pod name %s is not exist,update it", pod.Name)
+			log.Debug().Msgf("pod name %s is not exist,save it", pod.Name)
 			Save(pod)
 		}
 	}

@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/urfave/cli/v2"
+	"io"
 )
 
 func main() {
@@ -62,10 +63,21 @@ func run(cli *cli.Context) {
 
 func setLog(config *config.Config) {
 	// 设置全局logger
-	log.Logger = log.With().Caller().Logger().Output(zerolog.ConsoleWriter{
-		Out:        os.Stdout,
-		TimeFormat: time.RFC3339,
-	})
+	var writer io.Writer
+	file, err := os.OpenFile(config.File, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
+	if err != nil {
+		fmt.Printf("open log file %s error\n,print log to console", config.File)
+		writer = zerolog.ConsoleWriter{
+			Out:        os.Stdout,
+			TimeFormat: time.RFC3339,
+		}
+	} else {
+		writer = zerolog.ConsoleWriter{
+			Out:        file,
+			TimeFormat: time.RFC3339,
+		}
+	}
+	log.Logger = log.With().Caller().Logger().Output(writer)
 	if config.Debug {
 		log.Logger.Level(zerolog.DebugLevel)
 	} else {
