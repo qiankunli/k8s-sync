@@ -152,9 +152,7 @@ func DeleteByName(name string) error {
 
 type PodHandler func(pod PersistentPod) error
 
-const step = 10
-
-func Traverse(podHandler PodHandler) error {
+func Traverse(batch int32, podHandler PodHandler) error {
 	var minId int64
 	if err := db.Get(&minId, "select min(id) from tb_pod"); err != nil {
 		log.Err(err)
@@ -168,6 +166,7 @@ func Traverse(podHandler PodHandler) error {
 	log.Debug().Msgf("traverse db,minId %d,maxId %d, step 10", minId, maxId)
 	successCount := 0
 	failCount := 0
+	step := int64(batch)
 	for i := minId; i <= maxId; i += step {
 		sc, fc, _ := queryAndHandle(i, i+step-1, podHandler)
 		successCount += sc

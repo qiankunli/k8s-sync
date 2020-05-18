@@ -3,6 +3,7 @@ apiServer:
   host: 
   bearerToken: 
 clean:
+  batch: 20
   intervalSeconds: 60
 log:
   debug: true

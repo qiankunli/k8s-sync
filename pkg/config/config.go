@@ -26,6 +26,7 @@ func (config *Config) Check() error {
 }
 
 type Clean struct {
+	Batch           int32 `yaml:"batch"`
 	IntervalSeconds int32 `yaml:"intervalSeconds"`
 }
 
@@ -33,11 +34,14 @@ func (clean *Clean) Check() error {
 	if clean.IntervalSeconds == 0 {
 		return errors.New("you must set clean.IntervalSeconds")
 	}
+	if clean.Batch == 0 {
+		return errors.New("you must set clean.Batch")
+	}
 	return nil
 }
 
 type Log struct {
-	Debug bool `yaml:"debug"`
+	Debug bool   `yaml:"debug"`
 	File  string `yaml:"file"`
 }
 

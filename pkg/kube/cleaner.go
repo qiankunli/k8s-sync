@@ -12,6 +12,7 @@ import (
 
 type Cleaner struct {
 	client          *kubernetes.Clientset
+	batch           int32
 	intervalSeconds time.Duration
 	stopCh          chan bool
 }
@@ -19,6 +20,7 @@ type Cleaner struct {
 func NewCleaner(client *kubernetes.Clientset, config *config.Config) *Cleaner {
 	cleaner := &Cleaner{
 		client:          client,
+		batch:           config.Batch,
 		intervalSeconds: (time.Duration)(config.IntervalSeconds),
 		stopCh:          make(chan bool),
 	}
@@ -33,7 +35,7 @@ func (c *Cleaner) Run() {
 			return
 		default:
 		}
-		db.Traverse(func(pod db.PersistentPod) error {
+		db.Traverse(c.batch, func(pod db.PersistentPod) error {
 			return c.TryClean(pod.Name)
 		})
 	}
